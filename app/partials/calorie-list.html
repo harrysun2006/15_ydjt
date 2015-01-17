@@ -1,0 +1,107 @@
+<div class="container">
+	<div class="row hide">
+	  <div class="input-group date col-xs-2">
+	      <input type='text' class="form-control" id="datetimepicker1"/>
+	      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	  </div>
+	</div>
+  <div id="addCalorieDiv" class="hide">
+		<form id="addCalorie" class="noframe">
+			<h2 class="title">Add a new meal</h2>
+			<div class="input-group">
+				<input type="text" id="effective_date" class="form-control bootstrap-datetimepicker" placeholder="Date" ng-model="newCalorie.date" required/>
+				<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			</div>
+			<div class="input-group">
+				<input type="text" id="effective_time" class="form-control bootstrap-timepicker" placeholder="Time" ng-model="newCalorie.time" required/>
+				<span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+			</div>
+			<div class="input-group">
+				<input type="text" id="description" class="form-control" placeholder="Description" ng-model="newCalorie.description" required/>
+			</div>
+			<div class="input-group">
+				<input type="number" id="amount" class="form-control" placeholder="Calories" ng-model="newCalorie.amount" required/>
+			</div>
+			<button type="submit" class="btn btn-primary hide" id="btnSaveCalorie" ng-click="saveCalorie()">Save</button>
+		</form>
+	</div>
+
+	<h2>Filters</h2>
+  <form name="searchForm">
+    <div class="row">
+      <div class="col-xs-2 input-group">
+	  		<input type="text" class="form-control bootstrap-datetimepicker" placeholder="From Date" value="" ng-model="criteria.date_from" id="date_from"/>
+	  		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+      <div class="col-xs-2 input-group">
+        <input type="text" class="form-control bootstrap-timepicker" placeholder="From Time" ng-model="criteria.time_from" id="time_from"/>
+        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+        <!--span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span-->
+      </div>
+      <div class="col-xs-2 input-group">
+	  		<input type="text" class="form-control bootstrap-datetimepicker" placeholder="To Date" value="" ng-model="criteria.date_to" id="date_to"/>
+	  		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+      </div>
+      <div class="col-xs-2 input-group">
+        <input type="text" class="form-control bootstrap-timepicker" placeholder="To Time" ng-model="criteria.time_to" id="time_to"/>
+        <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+      </div>
+      <a class="btn btn-primary" ng-click="searchCalories(criteria)"><i class="glyphicon glyphicon-search"></i> Search</a>
+    </div>
+  </form>
+  
+  <div>
+	  <h2>Meals</h2>
+	  <div>
+	  	<span>Hi {{user.username}}, your daily expected calorie number is {{user.setting.expNumber}}!</span>
+	    <a class="btn btn-primary btn-xs" ng-click="addCalorie()"><span class="glyphicon glyphicon-plus"></span> Add meal </a>
+	  </div>
+		<form name="editForm">
+	  <table class="table table-condensed table-hover">
+	    <thead>
+	      <tr>
+	        <th>Date</th>
+	        <th>Time</th>
+	        <th>Calories</th>
+	        <th>Description</th>
+	        <th>Actions</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="calorie in calories | orderBy:'_timestamp':!reverse" valign="middle" class="{{calorie.level}} {{calorie.visible}}">
+	        <td class="col-xs-2">
+	        	<span ng-if="!calorie.editable">{{calorie.date}}</span>
+	        	<span ng-show="calorie.editable" ng-hide="!calorie.editable">
+	        		<input type="text" class="form-control" id="ne_{{calorie._id}}_date" value="{{calorie.date}}" required/>
+	        	</span>
+	        </td>
+	        <td class="col-xs-2">
+	        	<span ng-if="!calorie.editable">{{calorie.time}}</span>
+	        	<span ng-show="calorie.editable" ng-hide="!calorie.editable">
+	        		<input type="text" class="form-control" id="ne_{{calorie._id}}_time" value="{{calorie.time}}" required/>
+	        	</span>
+	        </td>
+	        <td class="col-xs-2">
+	        	<span ng-if="!calorie.editable">{{calorie.amount}}</span>
+	        	<span ng-if="calorie.editable">
+	        		<input type="text" class="form-control" placeholder="{{calorie.amount}}" value="{{calorie.amount}}" id="ne_{{calorie._id}}_amount" required/>
+	        	</span>
+	        </td>
+	        <td class="col-xs-2">
+	        	<span ng-if="!calorie.editable">{{calorie.description}}</span>
+	        	<span ng-if="calorie.editable">
+	        		<input type="text" class="form-control" placeholder="{{calorie.description}}" value="{{calorie.description}}" id="ne_{{calorie._id}}_description"/>
+	        	</span>
+	        </td>
+	        <td>
+	        	<a class="btn btn-success btn-xs" ng-if="calorie.editable" ng-click="updateCalorie(newCalorie, calorie)" title="Save"><span class="glyphicon glyphicon-check"></span>Save</a>
+	        	<a class="btn btn-warning btn-xs" ng-if="calorie.editable" ng-click="cancelUpdate(newCalorie, calorie)" title="Cancel"><span class="glyphicon glyphicon-remove"></span>Cancel</a>
+	        	<a class="btn btn-warning btn-xs" ng-if="!calorie.editable" ng-click="editCalorie(calorie)" title="Edit"><span class="glyphicon glyphicon-edit"></span>Edit</a>
+	        	<a class="btn btn-danger btn-xs" ng-if="!calorie.editable" ng-click="deleteCalorie(calorie)" title="Delete"><span class="glyphicon glyphicon-remove"></span>Delete</a>
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+	  </form>
+	</div>
+</div>
