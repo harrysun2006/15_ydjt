@@ -1,8 +1,8 @@
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
-var db = require('./database');
-var global = require('./global').settings;
-var redis = require('./redis');
+var db = require('./Database');
+var global = require('./Global').settings;
+var redis = require('./Redis');
 
 exports.login = function(req, res, next) {
   if (req.body.username === undefined || req.body.password === undefined) {

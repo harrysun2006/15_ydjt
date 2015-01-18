@@ -1,5 +1,5 @@
 var redis = require('redis');
-var global = require('./global').settings;
+var global = require('./Global').settings;
 
 var host = global.redisHost || 'localhost';
 var port = global.redisPort || 6379;

@@ -18,7 +18,9 @@ var GLOBAL_SETTINGS = {
     },
     mongoUrl: 'mongodb://localhost/calories',
     redisHost: 'localhost',
-    redisPort: 6379
+    redisPort: 6379,
+    dateFormat: 'YYYY-MM-DD',
+    datetimeFormat: 'YYYY-MM-DD HI24:mm:ss'
 };
 
 exports.settings = GLOBAL_SETTINGS;

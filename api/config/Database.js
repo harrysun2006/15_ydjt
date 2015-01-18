@@ -2,7 +2,7 @@
 
 var crypto = require('crypto');
 var mongoose = require('mongoose');
-var global = require('./global').settings;
+var global = require('./Global').settings;
 
 var mongoOptions = global.mongoOptions || { };
 var mongoUrl = global.mongoUrl || 'mongodb://localhost/calories';

@@ -1,7 +1,7 @@
 var crypto = require('crypto');
 var passport = require('passport');
-var db = require('./database');
-var global = require('./global').settings;
+var db = require('./Database');
+var global = require('./Global').settings;
 
 passport.serializeUser(function(user, done) {
   // console.log('serializeUser, ', user);

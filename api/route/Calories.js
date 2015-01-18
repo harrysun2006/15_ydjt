@@ -1,7 +1,7 @@
 var moment = require('moment')
-var db = require('../config/database.js');
-var validator = require('../config/validator.js');
-var dateFormat = 'DD/MM/YYYY';
+var db = require('../config/Database.js');
+var global = require('../config/Global.js');
+var validator = require('../config/Validator.js');
 
 exports.list = function(req, res) {
 	db.calorieModel.find({user_id: req.user._id}, function(err, results) {
@@ -23,11 +23,11 @@ exports.search = function(req, res) {
 	}
 	*/
 	if (c.date_from) {
-	  var df = moment(c.date_from, dateFormat);
+	  var df = moment(c.date_from, global.dateFormat);
 		q.where('date').gte(df.toDate());
 	}
 	if (c.date_to) {
-	  var dt = moment(c.date_to, dateFormat).add('days', 1);
+	  var dt = moment(c.date_to, global.dateFormat).add('days', 1);
 		q.where('date').lt(dt.toDate());
 	}
 	q.exec(function(err, results) {

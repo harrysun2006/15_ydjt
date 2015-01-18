@@ -8,10 +8,10 @@ var express = require('express')
 	, bodyParser = require('body-parser')
 	, cookieParser = require('cookie-parser')
   , util = require('util')
-	, db = require('./config/database')
-	, redis = require('./config/redis')
-	, global = require('./config/global').settings
-	, auth = require('./config/auth');
+	, db = require('./config/Database')
+	, redis = require('./config/Redis')
+	, global = require('./config/Global').settings
+	, auth = require('./config/Auth');
 
 var api = express();
 // api configuration
@@ -44,9 +44,9 @@ api.all('*', function(req, res, next) {
 
 //Route
 var routes = {};
-routes.users = require('./route/users.js');
-routes.public = require('./route/public.js');
-routes.calories = require('./route/calories.js');
+routes.users = require('./route/Users.js');
+routes.public = require('./route/Public.js');
+routes.calories = require('./route/Calories.js');
 
 api.post('/login', auth.login);
 api.post('/register', routes.users.register);

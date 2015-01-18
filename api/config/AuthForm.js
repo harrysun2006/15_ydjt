@@ -1,5 +1,5 @@
 var passport = require('passport');
-var db = require('./database');
+var db = require('./Database');
 
 exports.login = function(req, res, next) {
   passport.authenticate('local', function(dump, user, error) {
