@@ -50,5 +50,12 @@
   	"url": "https://github.com/harrysun2006/tt_calories/issues",
 		"email": "harrysun2006@gmail.com"
 	},
-	"homepage": "https://github.com/harrysun2006/tt_calories"
+	"homepage": "https://github.com/harrysun2006/tt_calories",
+  "pre-commit": [
+    "test"
+  ],
+  "scripts": {
+    "test": "ls",
+    "jslint": "jslint 'lib/*.js' 'index.js' "
+  }
 }

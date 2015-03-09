@@ -1,0 +1,77 @@
+<project name="15_ydjt" basedir="." default="all">
+
+	<property environment="env" />
+	<property name="ant.build.javac.target" value="1.6" />
+	<property name="ant.build.javac.source" value="1.6" />
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="bin" />
+	<property name="test.dir" value="test" />
+	<property name="sylla.jar" value="${basedir}/sylla.jar" />
+	<property name="sylla-src.jar" value="${basedir}/sylla-src.jar" />
+	<property name="sylla.zip" value="${basedir}/sylla.zip" />
+	<property name="jars.zip" value="${basedir}/jars.zip" />
+	<property name="test.jar" value="${basedir}/test.jar" />
+	<basename file="${test.jar}" property="test.jar.name" />
+	<basename file="${sylla.jar}" property="sylla.jar.name" />
+	<basename file="${sylla-src.jar}" property="sylla-src.jar.name" />
+
+	<path id="all.classpath">
+		<fileset dir="${basedir}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="compile">
+		<mkdir dir="${build.dir}" />
+		<echo>Using java version: ${ant.java.version}</echo>
+		<javac debug="on" fork="true" destdir="${build.dir}" srcdir="${src.dir}">
+			<classpath refid="all.classpath" />
+		</javac>
+	</target>
+
+	<target name="src" depends="compile">
+		<delete file="${sylla.jar}" />
+		<jar destfile="${sylla.jar}" update="true">
+			<fileset dir="${build.dir}">
+				<exclude name="com/test/**" />
+				<exclude name="**.properties" />
+				<exclude name="**.xml" />
+			</fileset>
+		</jar>
+		<delete file="${sylla-src.jar}" />
+		<jar basedir="${src.dir}" destfile="${sylla-src.jar}" update="true" />
+		<copy file="${build.dir}/sylla.properties" toDir="${basedir}" failonerror="false" />
+		<copy file="${build.dir}/oscache.properties" toDir="${basedir}" failonerror="false" />
+		<copy file="${build.dir}/log4j.xml" toDir="${basedir}" failonerror="false" />
+		<delete file="${sylla.zip}" />
+		<zip destfile="${sylla.zip}" update="true">
+			<fileset dir="${basedir}">
+				<include name="log4j.xml" />
+				<include name="sylla.properties" />
+				<include name="oscache.properties" />
+				<include name="sylla.bat" />
+				<include name="sylla.sh" />
+				<include name="${sylla.jar.name}" />
+				<include name="${sylla-src.jar.name}" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="test" depends="compile">
+		<delete file="${test.jar}" />
+		<jar destfile="${test.jar}" update="true">
+			<fileset dir="${build.dir}">
+				<include name="com/test/**" />
+				<include name="**.properties" />
+				<include name="**.xml" />
+			</fileset>
+		</jar>
+		<copy file="${test.jar}" toDir="${test.dir}/" failonerror="false" />
+	</target>
+
+	<target name="all" depends="test" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" include="**.class" />
+	</target>
+</project>

@@ -50,21 +50,17 @@ routes.calories = require('./route/Calories.js');
 
 api.post('/login', auth.login);
 api.post('/register', routes.users.register);
-// Update user, user can only update their own profile: password, setting
 api.put('/profile', userIsAuthenticated, routes.users.update);
 api.get('/logout', userIsAuthenticated, auth.logout);
 api.post('/about', routes.public.about);
 
-// Get all calories
+/*
 api.get('/calories', userIsAuthenticated, routes.calories.list);
-// Search calories
 api.post('/calories-search', userIsAuthenticated, routes.calories.search);
-// Create new calorie
 api.post('/calories', userIsAuthenticated, routes.calories.create);
-// Update an existing calorie
 api.put('/calories/:id', userIsAuthenticated, routes.calories.update);
-// Delete calorie
 api.delete('/calories/:id', userIsAuthenticated, routes.calories.delete);
+*/
 
 console.log('Starting Node.js servers for Calorie Tracker...');
 // create api server, default on port 3000
