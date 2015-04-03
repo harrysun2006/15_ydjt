@@ -49,3 +49,4 @@ mocha -R list test.js
 "test": "mocha --require test/support/env --reporter spec --bail --check-leaks test/ test/acceptance/",
 "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --require test/support/env --reporter dot --check-leaks test/ test/acceptance/",
 "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --require test/support/env --reporter spec --check-leaks test/ test/acceptance/"
+hello
