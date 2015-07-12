@@ -13,7 +13,7 @@ public class PoiTest {
 
   public static void main(String[] args) {
     /** This is the document that you want to read using Java. **/
-    String fileName = ".\\doc\\01.doc";
+    String fileName = ".\\doc\\t007.doc";
 
     /** Method call to read the document (demonstrate some useage of POI) **/
     readMyDocument(fileName);
