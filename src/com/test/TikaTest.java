@@ -12,8 +12,8 @@ public class TikaTest {
 
   public static void main(String[] args) {
     try {
-      test1();
-      // test2();
+      // test1();
+      test2();
     } catch(Exception e) {
       System.err.println(e);
     }
@@ -37,7 +37,13 @@ public class TikaTest {
     Metadata metadata = new Metadata();
     try {
         parser.parse(stream, handler, metadata);
-        System.out.println(handler.toString());
+        String[] names = metadata.names();
+        for (int i = 0; i < names.length; i++) {
+          System.out.println(names[i]);
+        }
+        handler.startDocument();
+        handler.endDocument();
+        // System.out.println(handler.toString());
     } finally {
         stream.close();
     }
