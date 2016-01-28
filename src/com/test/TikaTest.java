@@ -43,7 +43,7 @@ public class TikaTest {
         }
         handler.startDocument();
         handler.endDocument();
-        // System.out.println(handler.toString());
+        System.out.println(handler.toString());
     } finally {
         stream.close();
     }
