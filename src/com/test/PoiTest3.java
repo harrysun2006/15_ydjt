@@ -51,7 +51,7 @@ public class PoiTest3 {
 
   public static void main(String argv[]) {
     try {
-      convert2Html(".\\doc\\t007.doc", ".\\doc\\t007.html");
+      convert2Html("./doc/t007.doc", "./temp/t007.html");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -63,7 +63,7 @@ public class PoiTest3 {
     try {
       File file = new File(path);
       fos = new FileOutputStream(file);
-      bw = new BufferedWriter(new OutputStreamWriter(fos, "GB2312"));
+      bw = new BufferedWriter(new OutputStreamWriter(fos, "UTF-8"));
       bw.write(content);
     } catch (FileNotFoundException fnfe) {
       fnfe.printStackTrace();
@@ -95,7 +95,7 @@ public class PoiTest3 {
           if (pictureType.equals(PictureType.WMF)) {
             name = convert2PNG(content, suggestedName, widthInches, heightInches);
           } else {
-            OutputStream os = new FileOutputStream(new File("./doc/", name));
+            OutputStream os = new FileOutputStream(new File("./temp/", name));
             os.write(content);
             os.close();
           }
@@ -108,7 +108,7 @@ public class PoiTest3 {
       
       // https://github.com/haraldk/TwelveMonkeys
       private String convert2PNG(byte[] content, String suggestedName, float widthInches, float heightInches) throws Exception {
-        File wmf = new File("./doc/t007/", suggestedName);
+        File wmf = new File("./temp/t007/", suggestedName);
         OutputStream os = new FileOutputStream(wmf);
         os.write(content);
         os.close();
@@ -144,7 +144,7 @@ public class PoiTest3 {
         Document doc = gdi.getDocument();
         int i = name.lastIndexOf('.');
         String svg = name.substring(0, i) + ".svg";
-        OutputStream out = new FileOutputStream("./doc/t007/" + svg);
+        OutputStream out = new FileOutputStream("./temp/t007/" + svg);
 
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
@@ -158,22 +158,22 @@ public class PoiTest3 {
         out.close();
         
         PNGTranscoder t2 = new PNGTranscoder();
-        TranscoderInput i2 = new TranscoderInput(new FileInputStream("./doc/t007/" + svg));
-        TranscoderOutput o2 = new TranscoderOutput(new FileOutputStream(new File("./doc/t007/", name)));
+        TranscoderInput i2 = new TranscoderInput(new FileInputStream("./temp/t007/" + svg));
+        TranscoderOutput o2 = new TranscoderOutput(new FileOutputStream(new File("./temp/t007/", name)));
         // t2.setTranscodingHints(hints);
         t2.transcode(i2, o2);
       }
       
       private void convert2(File wmf, String name) throws Exception {
-        File png = new File("./doc/t007", name);
+        File png = new File("./temp/t007", name);
         ImageIO.write(ImageIO.read(wmf), "png", png);
       }
       
       private void convert3(String wmf, String png) throws Exception {
-        Image image = new Image(Display.getCurrent(), "./doc/t007/" + wmf);                
+        Image image = new Image(Display.getCurrent(), "./temp/t007/" + wmf);                
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { image.getImageData() };
-        try(FileOutputStream stream = new FileOutputStream("./doc/t007/" + png))
+        try(FileOutputStream stream = new FileOutputStream("./temp/t007/" + png))
         {
             loader.save(stream, SWT.IMAGE_PNG);
         }
@@ -190,7 +190,7 @@ public class PoiTest3 {
         /*
          * try { System.out.println(pic.suggestFullFileName() + ": " +
          * pic.suggestPictureType()); pic.writeImageContent(new
-         * FileOutputStream(".\\doc\\t007\\" + pic.suggestFullFileName())); }
+         * FileOutputStream("./temp/t007/" + pic.suggestFullFileName())); }
          * catch (FileNotFoundException e) { e.printStackTrace(); }
          */
       }

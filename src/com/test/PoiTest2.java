@@ -35,7 +35,7 @@ public class PoiTest2 {
   private String htmlText = "";
 
   public static void main(String[] args) throws Exception {
-    String fileName = ".\\doc\\t007.doc";
+    String fileName = "./doc/t007.doc";
     PoiTest2 pt = new PoiTest2();
     String s = pt.getWordAndStyle(fileName);
     System.out.println(pt.htmlText);
@@ -127,11 +127,10 @@ public class PoiTest2 {
     Picture pic = pTable.extractPicture(cr, false);
 
     String afileName = pic.suggestFullFileName();
-    OutputStream out = new FileOutputStream(new File("d:\\Temp\\22"
-        + File.separator + afileName));
+    OutputStream out = new FileOutputStream(new File("./temp/t007/" + afileName));
     pic.writeImageContent(out);
     // htmlText+="<img src='d:\\text\\"+afileName+"'/>";
-    picpath = "<img src='d:\\Temp\\22\\" + afileName + "'/>";
+    picpath = "<img src='t007/" + afileName + "'/>";
     // System.out.println(picpath);
     return picpath;
   }
@@ -173,13 +172,13 @@ public class PoiTest2 {
   }
 
   public void convertToHtml() throws Exception {
-    InputStream is = new FileInputStream(".\\doc\\t007.doc");
+    InputStream is = new FileInputStream("./doc/t007.doc");
     HWPFDocument wordDocument = new HWPFDocument(is);
     WordToHtmlConverter converter = new WordToHtmlConverter(
         DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());
     // 对HWPFDocument进行转换
     converter.processDocument(wordDocument);
-    Writer writer = new FileWriter(new File(".\\doc\\t007.html"));
+    Writer writer = new FileWriter(new File("./temp/t007.html"));
     Transformer transformer = TransformerFactory.newInstance().newTransformer();
     transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
     // 是否添加空格
